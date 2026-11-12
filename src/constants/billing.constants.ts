@@ -116,3 +116,18 @@ export const HSN_MENTORING_PAYMENTS_COLUMNS = [
   'Category',
   'Actions',
 ] as const;
+
+export const HSN_MENTORING_PAYMENT_STATUS_FILTERS = [
+  'All',
+  'New',
+  'Successful',
+  'Failed',
+  'Upcoming',
+  'Refunded',
+] as const;
+
+export const HSN_MENTORING_PAYMENT_DATE_FILTERS = [
+  'This Month',
+  'Last Month',
+  'Custom Date',
+] as const;

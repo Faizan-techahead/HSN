@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import {
+  HSN_MENTORING_PAYMENT_DATE_FILTERS,
+  HSN_MENTORING_PAYMENT_STATUS_FILTERS,
   HSN_MENTORING_PLANS_HEADINGS,
   HSN_MENTORING_PLANS_SUB_TABS,
 } from '../constants/billing.constants';
@@ -111,6 +113,25 @@ export class BillingPage {
     await expect(this.paymentsTab).toHaveClass(/bg-\[#272725\]/);
     await expect(this.plansTab).not.toHaveClass(/bg-\[#272725\]/);
     await expect(this.plansContentHeading(HSN_MENTORING_PLANS_HEADINGS.allPlanPayments)).toBeVisible();
+  }
+
+  async expectPaymentsContent(): Promise<void> {
+    await this.expectPaymentsTabSelected();
+    await this.expectPlansContentHeading(HSN_MENTORING_PLANS_HEADINGS.allPlanPayments);
+    await expect(this.main.getByRole('textbox', { name: 'Search payments', exact: true })).toBeVisible();
+    await expect(this.main.getByRole('button', { name: 'Category filter' })).toBeVisible();
+    await expect(this.main.getByText(/^Total:\s*\$[\d,]+(?:\.\d{2})?$/)).toBeVisible();
+
+    for (const name of HSN_MENTORING_PAYMENT_STATUS_FILTERS) {
+      await expect(this.main.getByRole('button', { name: new RegExp(`^${name}(?:\\s*\\(\\d+\\))?$`) })).toBeVisible();
+    }
+
+    for (const name of HSN_MENTORING_PAYMENT_DATE_FILTERS) {
+      await expect(this.main.getByRole('button', { name, exact: true })).toBeVisible();
+    }
+
+    await expect(this.main.getByRole('button', { name: 'Results per page' })).toBeVisible();
+    await expect(this.main.getByRole('textbox', { name: 'Go to page', exact: true })).toBeVisible();
   }
 
   async expectManagePlansVisible(): Promise<void> {

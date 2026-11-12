@@ -6,6 +6,8 @@ import {
   CANCELLED_SUBSCRIPTIONS_COLUMNS,
   FAILED_PAYMENTS_COLUMNS,
   HSN_MENTORING_BILLING_OPTION,
+  HSN_MENTORING_PAYMENT_DATE_FILTERS,
+  HSN_MENTORING_PAYMENT_STATUS_FILTERS,
   HSN_MENTORING_PAYMENTS_COLUMNS,
   HSN_MENTORING_PLANS_HEADINGS,
   HSN_MENTORING_PLANS_SUB_TABS,
@@ -209,15 +211,34 @@ test.describe('HSN Mentoring Billing', { tag: '@regression' }, () => {
       await billingPage.expectPlansSubTabSelected('Plan Categories');
       await billingPage.expectPlanCategoriesContent();
     });
+  });
 
-    await screenshotStep('Validate Payments tab on HSN Mentoring Billing Screen', async () => {
+  test('Validate HSN Mentoring Billing Payments Screen', async ({ billingPage, screenshotStep }, testInfo) => {
+    await screenshotStep('Validate user is on Payments tab', async () => {
       await billingPage.paymentsTab.click();
       await billingPage.expectPaymentsTabSelected();
+      await expect(billingPage.paymentsTab).toHaveText(/^Payments(?:\s*\(\d+\))?$/);
+    });
+
+    await screenshotStep('Validate All Plan Payments heading and controls', async () => {
+      await billingPage.expectPaymentsContent();
+      await testInfo.attach('Payments status filters', {
+        body: [...HSN_MENTORING_PAYMENT_STATUS_FILTERS].join('\n'),
+        contentType: 'text/plain',
+      });
+      await testInfo.attach('Payments date filters', {
+        body: [...HSN_MENTORING_PAYMENT_DATE_FILTERS].join('\n'),
+        contentType: 'text/plain',
+      });
+    });
+
+    await screenshotStep('Validate Payments table columns', async () => {
       const columns = await billingPage.expectPlansTableColumns(HSN_MENTORING_PAYMENTS_COLUMNS);
       await testInfo.attach('Payments columns', {
         body: columns.join('\n'),
         contentType: 'text/plain',
       });
+      console.log('Payments columns:', columns);
     });
   });
 });
