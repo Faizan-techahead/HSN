@@ -1,0 +1,11 @@
+Testcase Name: User can open the sign-in page and see the form
+
+Tags: regression
+
+Preconditions:
+- None
+
+Step to Reproduce:
+1. Open the HSN sign-in page
+2. Confirm the page title is "HSN Sign In"
+3. Confirm email, password, and login controls are visible

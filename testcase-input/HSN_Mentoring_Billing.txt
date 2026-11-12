@@ -1,0 +1,24 @@
+Testcase Name: Validate HSN Mentoring Billing Payments Screen
+
+Tags: regression
+
+Preconditions:
+- None
+
+Step to Reproduce:
+1. Login to the application using Admin Cred
+2. Validate user able to see Platform Dashboard
+3. Validate user able to click on Billing on the left hand side
+4. Validate user able to see 3 options (HSN Mentoring Billing, Ambassador Billing and Referral Subscriber) under Billing
+5. Validate user able to select HSN Mentoring Billing
+6. Validate user able to see Overview, Plans and Payments tab on HSN Mentoring Billing Screen
+7. Validate user is on Payments tab
+
+Suggestion:
+- create the script inside hsn-mentoring-billing.spec.ts
+- create a generic method If required
+- apply all valid assertions
+- When land on Plans page we have many fields to Validate
+- Explore the Plans screen and covered all validation
+- Also click on others tab like Active Subscriptions and other and do all validation
+- Before doing any chnages shaow me the code
